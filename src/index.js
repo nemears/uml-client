@@ -1,1 +1,1 @@
-export { UmlClient} from './umlClient'
+module.exports = require('./umlClient');
