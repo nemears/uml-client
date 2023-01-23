@@ -9,7 +9,7 @@ class UmlClient {
         this.client.setEncoding('utf-8');
         const myID = randomID() + '\0';
         this.idPromise = new Promise((res) => {
-            this.client.on('data', (data) => {
+            this.client.on('data', (data) /** @type {Buffer} */ => {
                 if (data.toString('utf-8') === 'id\0') {
                     this.client.write(myID);
                 } else if (data.toString('utf-8').substring(0, 28) === myID.substring(0, 28)) {
@@ -17,13 +17,13 @@ class UmlClient {
                 }
             });
         });
-        this.client.on('error', (e) => {
+        this.client.on('error', (e) /** @type {Error} */ => {
             console.log(e.message);
         });
         this.client.connect(8652, '127.0.0.1');
     }
 
-    randomID() {
+    randomID() /** @type {string} */ {
         var ret  =  "";
         const base64chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
                             ,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
@@ -34,11 +34,11 @@ class UmlClient {
         return ret;
     }
 
-    nullID() {
+    nullID() /** @type {string} */ {
         return 'AAAAAAAAAAAAAAAAAAAAAAAAAAAA';
     }
 
-    sendMessage(msgString) {
+    sendMessage(msgString /** @type {string} */) {
         var msgBytes = [
             (msgString.length + 1 & 0xFF000000) >>> 24,
             (msgString.length + 1 & 0x00FF0000) >>> 16,
@@ -54,7 +54,7 @@ class UmlClient {
         this.client.write(msg);
     }
 
-    async head() {
+    async head() /** @type {Promise<any>} */ {
         await this.idPromise;
         const msgString = JSON.stringify({get: ""});
         this.sendMessage(msgString);
@@ -67,7 +67,7 @@ class UmlClient {
         });
     }
 
-    async get(id) {
+    async get(id /** @type {string} */) /** @type {Promise<any>} */ {
         await this.idPromise;
         const msgString = JSON.stringify({get: id});
         this.sendMessage(msgString);
@@ -80,7 +80,7 @@ class UmlClient {
         });
     }
 
-    async write(data) {
+    async write(data /** @type {any} */) {
         await this.idPromise;
         const msgString = JSON.stringify(data);
         this.sendMessage(msgString);
