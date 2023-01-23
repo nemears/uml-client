@@ -1,8 +1,4 @@
-import { UmlClient } from "../../src";
-
-// export as namespace "uml-js";
-
-export = UmlClient;
+// export = UmlClient;
 
 declare class UmlClient {
     constructor();
