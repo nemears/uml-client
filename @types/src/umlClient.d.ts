@@ -9,7 +9,7 @@ declare class UmlClient {
     randomID() : string;
     nullID() : string;
     sendMessage(msgString : string);
-    async head() : Promise<any>;
-    async get(id : string) : Promise<any>;
-    async write(data : any);
+    head() : Promise<any>;
+    get(id : string) : Promise<any>;
+    write(data : any);
 }
