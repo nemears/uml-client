@@ -4,7 +4,7 @@ import Namespace from '../lib/namespace.js';
 import Package from '../lib/package.js';
 
 describe('ElementTest', function () {
-  describe('#ownedElement()', function () {
+  describe('#ownedElement', function () {
     it('should be able to access element after added', function () {
         let el = new Element();
         let otherEl = new Element();
@@ -12,7 +12,7 @@ describe('ElementTest', function () {
         assert.equal(el.ownedElements.data[0].id, otherEl.id);
     });
   });
-  describe('#ownedMembers()', function() {
+  describe('#ownedMembers', function() {
     it('should set opposite and subsets when adding element', function() {
       let nmspc = new Namespace();
       let otherNmspc = new Namespace();
