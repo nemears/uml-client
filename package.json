@@ -2,7 +2,6 @@
   "name": "uml-js",
   "version": "1.0.0",
   "description": "A library for interacting with a uml-server",
-  "type": "module",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha test/**/*.js --recursive --timeout 60000 --exit"
@@ -10,6 +9,14 @@
   "author": "Nicholas Emerson Mears",
   "license": "MIT",
   "dependencies": {
-    "mocha": "^10.2.0"
+    "core-js": "^3.27.2",
+    "mocha": "^10.2.0",
+    "websocket": "^1.0.34"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "babel": "^6.23.0"
   }
 }
