@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "core-js": "^3.27.2",
+    "js-yaml": "^4.1.0",
     "mocha": "^10.2.0",
     "websocket": "^1.0.34"
   },
