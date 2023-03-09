@@ -40,7 +40,7 @@ describe('PackageTests', () => {
         });
     });
     describe('emittingTests', () => {
-        it('emitPackageTest', async () => {
+        it('emitPackageTest', () => {
             const manager = new UmlManager();
             const packageEl = manager.create('package');
             const child1 = manager.create('package');
@@ -50,7 +50,7 @@ describe('PackageTests', () => {
             packageEl.packagedElements.add(child2);
             packageEl.owningPackage.set(owningPackage);
             packageEl.name = 'blahaj';
-            const emit = await packageEl.emit();
+            const emit = packageEl.emit();
             assert.equal(JSON.stringify(emit), JSON.stringify({
                 package: {
                     id: packageEl.id,

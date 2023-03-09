@@ -38,7 +38,7 @@ describe('ClassTests', () => {
         });
     });
     describe('emitting tests', () => {
-        it('emitClassTest', async () => {
+        it('emitClassTest', () => {
             const manager = new UmlManager();
             const clazz = manager.create('class');
             const property = manager.create('property');
@@ -46,7 +46,7 @@ describe('ClassTests', () => {
             clazz.name = 'blahaj';
             clazz.ownedAttributes.add(property);
             clazz.owningPackage.set(owningPackage);
-            const clazzEmit = await clazz.emit();
+            const clazzEmit = clazz.emit();
             assert.equal(JSON.stringify(clazzEmit), JSON.stringify({
                 class: {
                     id: clazz.id,
@@ -57,14 +57,14 @@ describe('ClassTests', () => {
                 },
                 owningPackage: owningPackage.id
             }));
-            const propertyEmit = await property.emit();
+            const propertyEmit = property.emit();
             assert.equal(JSON.stringify(propertyEmit), JSON.stringify({
                 property: {
                     id: property.id
                 },
                 class: clazz.id
             }));
-            const packageEmit = await owningPackage.emit();
+            const packageEmit = owningPackage.emit();
             assert.equal(JSON.stringify(packageEmit), JSON.stringify({
                 package: {
                     id: owningPackage.id,
