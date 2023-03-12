@@ -2,6 +2,9 @@ import Element from '../lib/element.js';
 import assert from 'assert';
 import Namespace from '../lib/namespace.js';
 import Package from '../lib/package.js';
+import Class from '../lib/class.js';
+import PrimitiveType from '../lib/primitiveType.js';
+import Property from '../lib/property.js';
 
 describe('ElementTest', function () {
   describe('#ownedElement', function () {
@@ -54,6 +57,62 @@ describe('ElementTest', function () {
       assert.equal(secondPckg.owner.val.id, pckg.id);
       pckg.packagedElements.remove(secondPckg);
       assert.equal(pckg.packagedElements.data.length, 0);
+    });
+  });
+  describe('isSubClassOf', () => {
+    it('isSubClassOfPackageTest', () => {
+      let pckg = new Package();
+      assert.ok(pckg.isSubClassOf('package'));
+      assert.ok(pckg.isSubClassOf('PACKAGE'));
+      assert.ok(pckg.isSubClassOf('packageableElement'));
+      assert.ok(pckg.isSubClassOf('PACKAGEABLE_ELEMENT'));
+      assert.ok(pckg.isSubClassOf('namespace'));
+      assert.ok(pckg.isSubClassOf('NAMESPACE'));
+      assert.ok(pckg.isSubClassOf('namedElement'));
+      assert.ok(pckg.isSubClassOf('NAMED_ELEMENT'));
+      assert.ok(pckg.isSubClassOf('element'));
+      assert.ok(pckg.isSubClassOf('ELEMENT'));
+    });
+    it('isSubClassOfClassTest', () => {
+      let clazz = new Class();
+      assert.ok(clazz.isSubClassOf('class'));
+      assert.ok(clazz.isSubClassOf('CLASS'));
+      assert.ok(clazz.isSubClassOf('structuredClassifier'));
+      assert.ok(clazz.isSubClassOf('STRUCTURED_CLASSIFIER'));
+      assert.ok(clazz.isSubClassOf('classifier'));
+      assert.ok(clazz.isSubClassOf('CLASSIFIER'));
+      assert.ok(clazz.isSubClassOf('packageableElement'));
+      assert.ok(clazz.isSubClassOf('PACKAGEABLE_ELEMENT'));
+      assert.ok(clazz.isSubClassOf('namespace'));
+      assert.ok(clazz.isSubClassOf('NAMESPACE'));
+      assert.ok(clazz.isSubClassOf('namedElement'));
+      assert.ok(clazz.isSubClassOf('NAMED_ELEMENT'));
+      assert.ok(clazz.isSubClassOf('element'));
+      assert.ok(clazz.isSubClassOf('ELEMENT'));
+    });
+    it('isSubClassOfPrimitiveTypeTest', () => {
+      let primitiveType = new PrimitiveType();
+      assert.ok(primitiveType.isSubClassOf('primitiveType'));
+      assert.ok(primitiveType.isSubClassOf('PRIMITIVE_TYPE'));
+      assert.ok(primitiveType.isSubClassOf('classifier'));
+      assert.ok(primitiveType.isSubClassOf('CLASSIFIER'));
+      assert.ok(primitiveType.isSubClassOf('packageableElement'));
+      assert.ok(primitiveType.isSubClassOf('PACKAGEABLE_ELEMENT'));
+      assert.ok(primitiveType.isSubClassOf('namespace'));
+      assert.ok(primitiveType.isSubClassOf('NAMESPACE'));
+      assert.ok(primitiveType.isSubClassOf('namedElement'));
+      assert.ok(primitiveType.isSubClassOf('NAMED_ELEMENT'));
+      assert.ok(primitiveType.isSubClassOf('element'));
+      assert.ok(primitiveType.isSubClassOf('ELEMENT'));
+    });
+    it('isSubClassOfPropertyTest', () => {
+      let property = new Property();
+      assert.ok(property.isSubClassOf('property'));
+      assert.ok(property.isSubClassOf('PROPERTY'));
+      assert.ok(property.isSubClassOf('namedElement'));
+      assert.ok(property.isSubClassOf('NAMED_ELEMENT'));
+      assert.ok(property.isSubClassOf('element'));
+      assert.ok(property.isSubClassOf('ELEMENT'));
     });
   });
 });
