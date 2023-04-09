@@ -1,7 +1,6 @@
 import assert from 'assert';
 import UmlManager from '../lib/manager';
 import parse from '../lib/parse';
-import { stringify } from 'querystring';
 
 describe('ClassTests', () => {
     describe('parsingTests', () => {
@@ -69,6 +68,7 @@ describe('ClassTests', () => {
             clazz.owningPackage.set(owningPackage);
             clazz.generalizations.add(generalization);
             generalization.general.set(general);
+            property.type.set(general);
             const clazzEmit = clazz.emit();
             assert.equal(JSON.stringify(clazzEmit), JSON.stringify({
                 class: {
@@ -86,7 +86,8 @@ describe('ClassTests', () => {
             const propertyEmit = property.emit();
             assert.equal(JSON.stringify(propertyEmit), JSON.stringify({
                 property: {
-                    id: property.id
+                    id: property.id,
+                    type: general.id
                 },
                 class: clazz.id
             }));
