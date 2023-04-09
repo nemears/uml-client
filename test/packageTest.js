@@ -56,8 +56,8 @@ describe('PackageTests', () => {
                     id: packageEl.id,
                     name: 'blahaj',
                     packagedElements: [
-                        child1.id + '.yml',
-                        child2.id + '.yml'
+                        child1.id,
+                        child2.id
                     ]
                 },
                 owningPackage: owningPackage.id

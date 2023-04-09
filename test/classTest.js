@@ -52,7 +52,7 @@ describe('ClassTests', () => {
                     id: clazz.id,
                     name: 'blahaj',
                     ownedAttributes: [
-                        property.id + '.yml'
+                        property.id
                     ]
                 },
                 owningPackage: owningPackage.id
@@ -69,10 +69,30 @@ describe('ClassTests', () => {
                 package: {
                     id: owningPackage.id,
                     packagedElements: [
-                        clazz.id + '.yml'
+                        clazz.id
                     ]
                 }
             }));
+        });
+    });
+    describe('basic tests', () => {
+        it('add ownedAttribute test', () => {
+            const manager = new UmlManager();
+            const clazz = manager.create('class');
+            const property = manager.create('property');
+            clazz.ownedAttributes.add(property);
+            assert.ok(clazz.ownedAttributes.contains(property));
+            assert.equal(clazz.ownedAttributes.data.length, 1);
+            assert.ok(clazz.attributes.contains(property));
+            assert.equal(clazz.attributes.data.length, 1);
+            assert.ok(clazz.features.contains(property));
+            assert.equal(clazz.features.data.length, 1);
+            assert.ok(clazz.ownedMembers.contains(property));
+            assert.equal(clazz.ownedMembers.data.length, 1);
+            assert.ok(clazz.members.contains(property));
+            assert.equal(clazz.members.data.length, 1);
+            assert.ok(clazz.ownedElements.contains(property));
+            assert.equal(clazz.ownedElements.data.length, 1);
         });
     })
 });
