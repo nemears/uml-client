@@ -1,6 +1,7 @@
 import assert from 'assert';
 import UmlManager from '../lib/manager';
 import parse from '../lib/parse';
+import { stringify } from 'querystring';
 
 describe('ClassTests', () => {
     describe('parsingTests', () => {
@@ -10,8 +11,11 @@ describe('ClassTests', () => {
                 class: {
                     id: 'T1J0hAryQORw9sMaNfgUwVDor7eS',
                     name: 'blahaj',
+                    generalizations: [
+                        'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh'
+                    ],
                     ownedAttributes: [
-                        'RI5EBAFWoJncjrIkOhB_T1NIGM_R.yml'
+                        'RI5EBAFWoJncjrIkOhB_T1NIGM_R'
                     ]
                 }
             }
@@ -22,6 +26,13 @@ describe('ClassTests', () => {
                     name: 'tooth'
                 }
             }
+            const generalizationData = {
+                specific: 'T1J0hAryQORw9sMaNfgUwVDor7eS',
+                generalization: {
+                    id: 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh',
+                    general: '95leUBpMz&jCviAoogr70m2Q7oV7'
+                }
+            }
             const clazz = parse(data);
             manager.add(clazz);
             assert.equal(clazz.id, 'T1J0hAryQORw9sMaNfgUwVDor7eS');
@@ -29,12 +40,20 @@ describe('ClassTests', () => {
             for (let id of clazz.ownedAttributes.ids()) {
                 assert.equal(id, 'RI5EBAFWoJncjrIkOhB_T1NIGM_R');
             }
+            for (let id of clazz.generalizations.ids()) {
+                assert.equal(id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh')
+            }
             const property = parse(propertyData);
             manager.add(property);
             assert.equal(property.id, 'RI5EBAFWoJncjrIkOhB_T1NIGM_R');
             assert.equal(property.name, 'tooth');
             const propertyClazz = await property.clazz.get();
             assert.equal(propertyClazz.id, clazz.id);
+            const generalization = parse(generalizationData);
+            manager.add(generalization);
+            assert.equal(generalization.id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh');
+            const generalizationSpecific = await generalization.specific.get();
+            assert.equal(generalizationSpecific.id, clazz.id);
         });
     });
     describe('emitting tests', () => {
@@ -43,14 +62,21 @@ describe('ClassTests', () => {
             const clazz = manager.create('class');
             const property = manager.create('property');
             const owningPackage = manager.create('package');
+            const generalization = manager.create('generalization');
+            const general = manager.create('class');
             clazz.name = 'blahaj';
             clazz.ownedAttributes.add(property);
             clazz.owningPackage.set(owningPackage);
+            clazz.generalizations.add(generalization);
+            generalization.general.set(general);
             const clazzEmit = clazz.emit();
             assert.equal(JSON.stringify(clazzEmit), JSON.stringify({
                 class: {
                     id: clazz.id,
                     name: 'blahaj',
+                    generalizations: [
+                        generalization.id
+                    ],
                     ownedAttributes: [
                         property.id
                     ]
@@ -72,6 +98,14 @@ describe('ClassTests', () => {
                         clazz.id
                     ]
                 }
+            }));
+            const generalizationEmit = generalization.emit();
+            assert.equal(JSON.stringify(generalizationEmit), JSON.stringify({
+                generalization: {
+                    id: generalization.id,
+                    general: general.id
+                },
+                specific: clazz.id
             }));
         });
     });

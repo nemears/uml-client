@@ -11,8 +11,8 @@ describe('PackageTests', () => {
                     id: 'gLIIofvw6P3saxFtrk3z2KkEHzBR',
                     name: 'blahaj',
                     packagedElements: [
-                        '3KIU4oA0taLKU7ilMjGhTgZ&Zk4A.yml',
-                        'VHBQT06I7yXBTabcFapea4_h4Y66.yml'
+                        '3KIU4oA0taLKU7ilMjGhTgZ&Zk4A',
+                        'VHBQT06I7yXBTabcFapea4_h4Y66'
                     ]
                 }
             }
@@ -28,7 +28,7 @@ describe('PackageTests', () => {
                 package: {
                     id: 't4ZBDDjRiqoD&sVyDe7Q0isJ8aYm',
                     packagedElements: [
-                        'gLIIofvw6P3saxFtrk3z2KkEHzBR.yml'
+                        'gLIIofvw6P3saxFtrk3z2KkEHzBR'
                     ]
                 }
             }
