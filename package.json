@@ -1,6 +1,6 @@
 {
   "name": "uml-js",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A library for interacting with a uml-server",
   "main": "lib/index.js",
   "scripts": {
