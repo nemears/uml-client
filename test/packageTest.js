@@ -61,7 +61,7 @@ describe('PackageTests', () => {
                     ]
                 },
                 owningPackage: owningPackage.id
-            }))
+            }));
         });
     });
 });
