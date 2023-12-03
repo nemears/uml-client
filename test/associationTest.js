@@ -17,5 +17,25 @@ describe('Association Tests', () => {
             assert.equal(extension.id, '3zEOSFAHbYoHtgDM7WQN5nsJkIbP');
             assert.equal(extension.metaClass, 'class');
         });
-    })
+        it('deleteAssociationTest', async () => {
+            const manager = new UmlManager();
+            const association = manager.create('association');
+            const memberEnd = manager.create('property');
+            const ownedEnd = manager.create('property');
+            const association2 = manager.create('association');
+            const navigableOwnedEnd = manager.create('property');
+
+            association.memberEnds.add(memberEnd);
+            association.ownedEnds.add(ownedEnd);
+            await manager.deleteElement(association);
+            assert.equal(memberEnd.association.has(), false);
+            assert.equal(ownedEnd.owningAssociation.has(), false);
+
+            association2.memberEnds.add(memberEnd);
+            association2.navigableOwnedEnds.add(navigableOwnedEnd);
+            await manager.deleteElement(association2);
+            assert.equal(memberEnd.association.has(), false);
+            assert.equal(navigableOwnedEnd.owningAssociation.has(), false);
+        });
+    });
 });
