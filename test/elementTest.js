@@ -3,6 +3,7 @@ import assert from 'assert';
 import Namespace from '../lib/namespace.js';
 import Package from '../lib/package.js';
 import Class from '../lib/class.js';
+import Comment from '../lib/comment.js';
 import PrimitiveType from '../lib/primitiveType.js';
 import Property from '../lib/property.js';
 
@@ -113,6 +114,13 @@ describe('ElementTest', function () {
       assert.ok(property.isSubClassOf('NAMED_ELEMENT'));
       assert.ok(property.isSubClassOf('element'));
       assert.ok(property.isSubClassOf('ELEMENT'));
+    });
+    it('isSubClassOfCommentTest', () => {
+      let comment = new Comment();
+      assert.ok(comment.isSubClassOf('comment'));
+      assert.ok(comment.isSubClassOf('COMMENT'));
+      assert.ok(comment.isSubClassOf('element'));
+      assert.ok(comment.isSubClassOf('ELEMENT'));
     });
   });
 });
