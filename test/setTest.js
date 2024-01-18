@@ -44,4 +44,22 @@ describe('SetTest', () => {
             }
         });
     });
+    describe('singletonTests', () => {
+        it('oppositeOverride', async () => {
+            const manager = new UmlManager();
+            let pckg1 = manager.create('package');
+            let pckg2 = manager.create('package');
+            let clazz = manager.create('class');
+            pckg1.packagedElements.add(clazz);
+            assert(pckg1.packagedElements.contains(clazz));
+            assert.equal(pckg1.packagedElements.size(), 1);
+            assert.equal(clazz.owningPackage.id(), pckg1.id);
+            assert.equal(pckg2.packagedElements.size(), 0);
+            pckg2.packagedElements.add(clazz);
+            assert(pckg2.packagedElements.contains(clazz));
+            assert.equal(pckg2.packagedElements.size(), 1);
+            assert.equal(clazz.owningPackage.id(), pckg2.id);
+            assert.equal(pckg1.packagedElements.size(), 0);
+        });
+    });
 });
