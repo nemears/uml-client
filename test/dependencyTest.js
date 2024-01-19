@@ -42,26 +42,24 @@ describe('DependencyTests', () => {
         const clazzToo = manager.create('class');
         dependency.supplier.add(clazz);
         dependency.client.add(clazzToo);
-        clazzToo.clientDependencies.add(dependency);
         const dependencyEmit = dependency.emit();
-        assert.equal(JSON.stringify(commentEmit), JSON.stringify({
+        assert.equal(JSON.stringify(dependencyEmit), JSON.stringify({
             dependency: {
                 id: dependency.id,
-                supplier: [clazz.id],
-                client: [clazzToo]
-            },
-            owner: clazz.id
+                clients: [clazzToo.id],
+                suppliers: [clazz.id]
+            }
         }));        
     });
     it('deleteDependencyTest', async () => {
         const manager = new UmlManager();
-        const comment = manager.create('comment');
+        const dependency = manager.create('dependency');
         const clazz = manager.create('class');
-        clazz.ownedComments.add(comment);
-        assert.equal(comment.owner.id(), clazz.id);
-        assert.equal(clazz.ownedComments.size(), 1);
-        await manager.deleteElement(comment);
-        assert.equal(comment.owner.id(), nullID());
-        assert.equal(clazz.ownedComments.size(), 0);
+        const clazzToo = manager.create('class');
+        dependency.supplier.add(clazz);
+        dependency.client.add(clazzToo);
+        assert.equal(await clazzToo.clientDependencies.front(), dependency);
+        await manager.deleteElement(dependency);
+        assert.equal(dependency.clientDependencies.size(), 0);
     });
 })
