@@ -2,7 +2,7 @@ import UmlWebClient from "../lib/umlClient";
 import { randomID } from '../lib/element';
 import assert from 'assert';
 
-let serverAddress = 'wss://uml.cafe/api/';//'ws://localhost:1672';
+let serverAddress = 'wss://uml.cafe/api/';
 let sessionName = randomID();
 
 describe('UmlClient2Test', () => {
