@@ -1,7 +1,7 @@
 {
   "name": "uml-client",
-  "version": "0.4.3",
-  "description": "A library for interacting with a uml-server",
+  "version": "0.4.4",
+  "description": "A library for interacting with a uml-kitchen / uml-cafe api",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha test/**/*.js --recursive --timeout 60000 --exit"
