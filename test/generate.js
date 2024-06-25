@@ -201,4 +201,22 @@ describe('uml-generate tests', () => {
         value = await slot.values.front();
         assert(value.value === 'fox');
     });
+    it('integration test (set up manager from UML folder in base project)', async () => {
+        const client = new UmlClient({
+            address: 'wss://uml.cafe/api/',
+            project: randomID(),
+        });
+        await client.initialization; 
+
+        const model = await client.head();
+        const uml = await model.packagedElements.front();
+        assert(uml.name === 'UML');
+        const api = client.post('package');
+        model.packagedElements.add(api);
+        const umlModule = await generate(uml, client);
+        const baseModuleManager  = new umlModule.UMLManager(api);
+        const shape = baseModuleManager.post('Diagram Interchange.Shape');
+        assert(shape.bounds)
+        assert(!shape.bounds.has());
+    });
 });
