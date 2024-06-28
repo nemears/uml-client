@@ -43,6 +43,20 @@ describe('SetTest', () => {
                 i++;
             }
         });
+//        it('redefineTest' , async () => {
+//            const manager = new UmlManager();
+//            const el = {
+//                sets : {},
+//                manager: manager
+//            };
+//            el.setA = new Set();
+//            el.setB = new Set();
+//            console.log(el.setB);
+//            el.setB.redefines(el.setA);
+//            const pkg = manager.create('package');
+//            el.setA.add(pkg);
+//            assert(el.setB.contains(pkg));
+//        });
     });
     describe('singletonTests', () => {
         it('oppositeOverride', async () => {
