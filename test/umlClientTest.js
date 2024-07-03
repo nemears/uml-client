@@ -1,5 +1,5 @@
 import UmlWebClient from "../lib/umlClient";
-import { randomID } from '../lib/element';
+import { randomID } from '../lib/types/element';
 import assert from 'assert';
 
 let serverAddress = 'wss://uml.cafe/api/';

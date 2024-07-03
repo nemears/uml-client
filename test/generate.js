@@ -1,7 +1,7 @@
 const assert = require('assert');
 import UmlClient from '../lib/umlClient.js';
 import { STRING_ID, generate } from '../lib/generate.js';
-import { randomID } from '../lib/element.js';
+import { randomID } from '../lib/types/element.js';
 
 describe('uml-generate tests', () => {
     it('generate simple class with singleton', async () => {
@@ -207,6 +207,7 @@ describe('uml-generate tests', () => {
         assert(uml.name === 'UML');
         const api = client.post('package');
         model.packagedElements.add(api);
+        console.log('generating...');
         const module = await generate(uml, client);
         return {
             module: module,
