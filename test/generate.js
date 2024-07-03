@@ -242,21 +242,26 @@ describe('uml-generate tests', () => {
             const profile = client.post('profile');
             const head = await client.head();
             const umlPackage = await head.packagedElements.front();
-            const packagedElements = //TODO aghgha
             umlPackage.packagedElements.add(profile);
             profile.name = 'TestProfile';
             profile.packagedElements.add(stereotype, foo);
+            extension.ownedEnd.set(extensionEnd);
+            extension.metaClass = 'package';
+            profile.packagedElements.add(extension)
             stereotype.name = 'Test';
             stereotype.ownedAttributes.add(property);
             property.name = 'foos'
+            property.subsettedProperties.add('F628ncQKADxo6FLtAlDOdlJfewLy');
             foo.name == 'Foo';
+            property.type.set(foo);
+            profile.ownedStereotypes.add(stereotype);
+            profile.packagedElements.add(foo);
             
-            
-            // TODO 
-
             const uml = await getUmlModuleAndManager(client);
             const manager = uml.manager;
-            
+            const packageToStereotype = client.post('package');
+            const testEl = manager.apply(packageToStereotype, 'TestProfile.Test');
+            assert(testEl);
         });
     });
 });
