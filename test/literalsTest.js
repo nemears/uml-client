@@ -40,7 +40,7 @@ describe('Literals test', () => {
         });
     });
     describe('emiting tests', () => {
-        it('emit literal ints and multiplicity', () => {
+        it('emit literal ints and multiplicity', async () => {
             const manager = new UmlManager();
             const pckg = manager.create('package');
             const literalString = manager.create('literalString');
@@ -48,13 +48,13 @@ describe('Literals test', () => {
             const literalIntUp = manager.create('literalInt');
             const property = manager.create('property');
             const dataType = manager.create('dataType');
-            pckg.packagedElements.add(literalString);
-            pckg.packagedElements.add(dataType);
+            await pckg.packagedElements.add(literalString);
+            await pckg.packagedElements.add(dataType);
             literalString.name = 'literal string test';
             literalString.value = 'the value of the literal string';
             dataType.ownedAttributes.add(property);
-            property.lowerValue.set(literalInt);
-            property.upperValue.set(literalIntUp);
+            await property.lowerValue.set(literalInt);
+            await property.upperValue.set(literalIntUp);
             literalInt.value = 0;
             literalIntUp.value = 10;
             literalInt.name = 'lower';

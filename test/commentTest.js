@@ -60,7 +60,7 @@ describe('CommentTests', () => {
         const manager = new UmlManager();
         const comment = manager.create('comment');
         const clazz = manager.create('class');
-        clazz.ownedComments.add(comment);
+        await clazz.ownedComments.add(comment);
         assert.equal(comment.owner.id(), clazz.id);
         assert.equal(clazz.ownedComments.size(), 1);
         await manager.deleteElement(comment);

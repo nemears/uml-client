@@ -22,6 +22,24 @@ describe('SetTest', () => {
                 i++;
             }
         });
+        it('iterate through multi set array', async () => {
+            const manager = new UmlManager();
+            const assoc = manager.create('association');
+            const ownedEnd = manager.create('property');
+            const memberEnd = manager.create('property');
+            ownedEnd.name = 'ownedEnd';
+            memberEnd.name = 'memberEnd';
+            await assoc.ownedEnds.add(ownedEnd);
+            await assoc.memberEnds.add(memberEnd);
+            const endsToVisit = new Set([memberEnd, ownedEnd]);
+            for await (const end of assoc.memberEnds) {
+                assert.ok(assoc.memberEnds.contains(end));
+                assert.ok(endsToVisit.has(end));
+                endsToVisit.delete(end);
+                console.log(end.name);
+            }
+            assert.equal(endsToVisit.size, 0);
+        });
     })
     describe('Ids iterate', () => {
         it('iterate through ids', () => {
@@ -64,12 +82,12 @@ describe('SetTest', () => {
             let pckg1 = manager.create('package');
             let pckg2 = manager.create('package');
             let clazz = manager.create('class');
-            pckg1.packagedElements.add(clazz);
+            await pckg1.packagedElements.add(clazz);
             assert(pckg1.packagedElements.contains(clazz));
             assert.equal(pckg1.packagedElements.size(), 1);
             assert.equal(clazz.owningPackage.id(), pckg1.id);
             assert.equal(pckg2.packagedElements.size(), 0);
-            pckg2.packagedElements.add(clazz);
+            await pckg2.packagedElements.add(clazz);
             assert(pckg2.packagedElements.contains(clazz));
             assert.equal(pckg2.packagedElements.size(), 1);
             assert.equal(clazz.owningPackage.id(), pckg2.id);

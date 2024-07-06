@@ -25,8 +25,8 @@ describe('Association Tests', () => {
             const association2 = manager.create('association');
             const navigableOwnedEnd = manager.create('property');
 
-            association.memberEnds.add(memberEnd);
-            association.ownedEnds.add(ownedEnd);
+            await association.memberEnds.add(memberEnd);
+            await association.ownedEnds.add(ownedEnd);
             await manager.deleteElement(association);
             assert.equal(memberEnd.association.has(), false);
             assert.equal(ownedEnd.owningAssociation.has(), false);

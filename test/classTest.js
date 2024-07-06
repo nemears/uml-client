@@ -111,23 +111,23 @@ describe('ClassTests', () => {
         });
     });
     describe('basic tests', () => {
-        it('add ownedAttribute test', () => {
+        it('add ownedAttribute test', async () => {
             const manager = new UmlManager();
             const clazz = manager.create('class');
             const property = manager.create('property');
-            clazz.ownedAttributes.add(property);
+            await clazz.ownedAttributes.add(property);
             assert.ok(clazz.ownedAttributes.contains(property));
-            assert.equal(clazz.ownedAttributes.data.length, 1);
+            assert.equal(clazz.ownedAttributes.size(), 1);
             assert.ok(clazz.attributes.contains(property));
-            assert.equal(clazz.attributes.data.length, 1);
+            assert.equal(clazz.attributes.size(), 1);
             assert.ok(clazz.features.contains(property));
-            assert.equal(clazz.features.data.length, 1);
+            assert.equal(clazz.features.size(), 1);
             assert.ok(clazz.ownedMembers.contains(property));
-            assert.equal(clazz.ownedMembers.data.length, 1);
+            assert.equal(clazz.ownedMembers.size(), 1);
             assert.ok(clazz.members.contains(property));
-            assert.equal(clazz.members.data.length, 1);
+            assert.equal(clazz.members.size(), 1);
             assert.ok(clazz.ownedElements.contains(property));
-            assert.equal(clazz.ownedElements.data.length, 1);
+            assert.equal(clazz.ownedElements.size(), 1);
         });
     })
 });
