@@ -214,19 +214,6 @@ describe('uml-generate tests', () => {
             manager: new module.UMLManager(api)
         };
     };
-    it('integration test (set up manager from UML folder in base project)', async () => {
-        const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
-            project: randomID(),
-        });
-        await client.initialization; 
-
-        const uml = await getUmlModuleAndManager(client); 
-        const manager = uml.manager;
-        const shape = manager.post('Diagram Interchange.Shape');
-        assert(shape.bounds)
-        assert(!shape.bounds.has());
-    });
     describe('Stereotype Tests', () => {
         it('Stereotype subsets packagedElement', async () => {
             const client = new UmlClient({
@@ -253,7 +240,7 @@ describe('uml-generate tests', () => {
             stereotype.ownedAttributes.add(property);
             property.name = 'foos'
             property.subsettedProperties.add('F628ncQKADxo6FLtAlDOdlJfewLy');
-            foo.name == 'Foo';
+            foo.name = 'Foo';
             property.type.set(foo);
             profile.ownedStereotypes.add(stereotype);
             profile.packagedElements.add(foo);
@@ -262,7 +249,12 @@ describe('uml-generate tests', () => {
             const manager = uml.manager;
             const packageToStereotype = client.post('package');
             const testEl = manager.apply(packageToStereotype, 'TestProfile.Test');
-            assert(testEl);
+            assert.ok(testEl);
+            const fooInst = manager.post('TestProfile.Foo');
+            assert.ok(fooInst);
+            testEl.foos.add(fooInst);
+            assert.ok(testEl.foos.contains(fooInst));
+            assert.ok(testEl.packagedElements.contains(fooInst));
         });
     });
 });

@@ -3,6 +3,22 @@ import UmlManager from '../lib/manager';
 import parse from '../lib/parse';
 
 describe('PackageTests', () => {
+    it('basic stereotype profile test', async () => {
+        const manager = new UmlManager();
+        const stereotype = manager.create('stereotype');
+        const profile = manager.create('profile');
+        const pkg = manager.create('package');
+        await profile.ownedStereotypes.add(stereotype);
+        assert.equal(stereotype.profile.id(), profile.id);
+        await profile.ownedStereotypes.remove(stereotype);
+        await profile.packagedElements.add(pkg);
+        await pkg.ownedStereotypes.add(stereotype);
+        assert.equal(stereotype.profile.id(), profile.id);
+        await pkg.ownedStereotypes.remove(stereotype);
+        assert.ok(!stereotype.profile.has());
+        
+        // TODO more complex testing of policies
+    });
     describe('parsingTests', () => {
         it('parsePackageTest', async () => {
             const data = {
