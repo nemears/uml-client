@@ -4,7 +4,7 @@ import parse from '../lib/parse';
 
 describe('Association Tests', () => {
     describe('parse association tests', () => {
-        it('parseExtensionTest', () => {
+        it('parseExtensionTest', async () => {
             const manager = new UmlManager();
             const data = {
                 extension: {
@@ -12,7 +12,7 @@ describe('Association Tests', () => {
                     metaClass: 'class'
                 }
             }
-            const extension = parse(data);
+            const extension = await parse(data);
             manager.add(extension);
             assert.equal(extension.id, '3zEOSFAHbYoHtgDM7WQN5nsJkIbP');
             assert.equal(extension.metaClass, 'class');

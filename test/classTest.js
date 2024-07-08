@@ -32,7 +32,7 @@ describe('ClassTests', () => {
                     general: '95leUBpMz&jCviAoogr70m2Q7oV7'
                 }
             }
-            const clazz = parse(data);
+            const clazz = await parse(data);
             manager.add(clazz);
             assert.equal(clazz.id, 'T1J0hAryQORw9sMaNfgUwVDor7eS');
             assert.equal(clazz.name, 'blahaj');
@@ -42,13 +42,13 @@ describe('ClassTests', () => {
             for (let id of clazz.generalizations.ids()) {
                 assert.equal(id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh')
             }
-            const property = parse(propertyData);
+            const property = await parse(propertyData);
             manager.add(property);
             assert.equal(property.id, 'RI5EBAFWoJncjrIkOhB_T1NIGM_R');
             assert.equal(property.name, 'tooth');
             const propertyClazz = await property.clazz.get();
             assert.equal(propertyClazz.id, clazz.id);
-            const generalization = parse(generalizationData);
+            const generalization = await parse(generalizationData);
             manager.add(generalization);
             assert.equal(generalization.id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh');
             const generalizationSpecific = await generalization.specific.get();

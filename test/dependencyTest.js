@@ -25,9 +25,9 @@ describe('DependencyTests', () => {
             }
         }
 
-        const dependency = parse(data);
-        const clazz = parse(supplierData);
-        const clazzToo = parse(clientData);
+        const dependency = await parse(data);
+        const clazz = await parse(supplierData);
+        const clazzToo = await parse(clientData);
         manager.add(dependency);
         manager.add(clazz);
         manager.add(clazzToo);

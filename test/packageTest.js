@@ -8,6 +8,9 @@ describe('PackageTests', () => {
         const stereotype = manager.create('stereotype');
         const profile = manager.create('profile');
         const pkg = manager.create('package');
+        stereotype.name = 'stereotype';
+        profile.name = 'profile';
+        pkg.name = 'package';
         await profile.ownedStereotypes.add(stereotype);
         assert.equal(stereotype.profile.id(), profile.id);
         await profile.ownedStereotypes.remove(stereotype);
@@ -33,7 +36,7 @@ describe('PackageTests', () => {
                 }
             }
             const manager = new UmlManager();
-            const packageEl = parse(data);
+            const packageEl = await parse(data);
             manager.add(packageEl);
             assert.equal(packageEl.id, 'gLIIofvw6P3saxFtrk3z2KkEHzBR')
             assert.equal(packageEl.name, 'blahaj');
@@ -48,7 +51,7 @@ describe('PackageTests', () => {
                     ]
                 }
             }
-            const owningPackage = parse(owningPackageData);
+            const owningPackage = await parse(owningPackageData);
             manager.add(owningPackage);
             const owningPackageFromPackage = await packageEl.owningPackage.get();
             assert.ok(owningPackageFromPackage !== null && owningPackageFromPackage !== undefined);

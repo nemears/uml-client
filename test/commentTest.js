@@ -25,9 +25,9 @@ describe('CommentTests', () => {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7eE',
             }
         }
-        const comment = parse(data);
-        const clazz = parse(ownerData);
-        const clazzToo = parse(annotatedData);
+        const comment = await parse(data);
+        const clazz = await parse(ownerData);
+        const clazzToo = await parse(annotatedData);
         manager.add(comment);
         manager.add(clazz);
         manager.add(clazzToo);

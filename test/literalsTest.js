@@ -4,7 +4,7 @@ import parse from "../lib/parse";
 
 describe('Literals test', () => {
     describe('Parsing tests', () => {
-        it('parseLiteralIntTest', () => {
+        it('parseLiteralIntTest', async () => {
             const manager = new UmlManager();
             const literalIntData = {
                 owningPackage: 'KtGdtwTqJxkvydq04BBYm2UHTxSx',
@@ -14,14 +14,14 @@ describe('Literals test', () => {
                     value: 1
                 }
             };
-            const literalInt = parse(literalIntData);
+            const literalInt = await parse(literalIntData);
             manager.add(literalInt);
             assert.equal(literalInt.id, 'yjo4P9202s2J4Sy8xqq4CrYqkqMt');
             assert.equal(literalInt.name, 'little int');
             assert.equal(literalInt.value, 1);
             assert.equal(literalInt.owningPackage.id(), 'KtGdtwTqJxkvydq04BBYm2UHTxSx');
         });
-        it('parseLiteralStringTest', () => {
+        it('parseLiteralStringTest', async () => {
             const manager = new UmlManager();
             const literalStringData = {
                 owningPackage: 'KtGdtwTqJxkvydq04BBYm2UHTxSx',
@@ -31,7 +31,7 @@ describe('Literals test', () => {
                     value: 1
                 }
             };
-            const literalString = parse(literalStringData);
+            const literalString = await parse(literalStringData);
             manager.add(literalString);
             assert.equal(literalString.id, 'yjo4P9202s2J4Sy8xqq4CrYqkqMt');
             assert.equal(literalString.name, 'little int');

@@ -257,4 +257,14 @@ describe('uml-generate tests', () => {
             assert.ok(testEl.packagedElements.contains(fooInst));
         });
     });
+    it('Get Diagram Stereotype', async () => {
+        const client = new UmlClient({
+            address: 'ws://localhost:1672',
+            project: randomID(),
+        });
+        await client.initialization;
+
+        const stereotype = await client.get('Diagram_nuc1IC2Cavgoa4zMBlVq');
+        assert.ok(stereotype.profile.has());
+    });
 });
