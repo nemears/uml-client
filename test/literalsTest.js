@@ -52,7 +52,7 @@ describe('Literals test', () => {
             await pckg.packagedElements.add(dataType);
             literalString.name = 'literal string test';
             literalString.value = 'the value of the literal string';
-            dataType.ownedAttributes.add(property);
+            await dataType.ownedAttributes.add(property);
             await property.lowerValue.set(literalInt);
             await property.upperValue.set(literalIntUp);
             literalInt.value = 0;

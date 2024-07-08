@@ -248,7 +248,7 @@ describe('uml-generate tests', () => {
             const uml = await getUmlModuleAndManager(client);
             const manager = uml.manager;
             const packageToStereotype = client.post('package');
-            const testEl = manager.apply(packageToStereotype, 'TestProfile.Test');
+            const testEl = await manager.apply(packageToStereotype, 'TestProfile.Test');
             assert.ok(testEl);
             const fooInst = manager.post('TestProfile.Foo');
             assert.ok(fooInst);
