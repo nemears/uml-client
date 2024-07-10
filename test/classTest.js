@@ -7,7 +7,7 @@ describe('ClassTests', () => {
         it('basicParsingTest', async () => {
             const manager = new UmlManager();
             const data = {
-                class: {
+                Class: {
                     id: 'T1J0hAryQORw9sMaNfgUwVDor7eS',
                     name: 'blahaj',
                     generalizations: [
@@ -20,14 +20,14 @@ describe('ClassTests', () => {
             }
             const propertyData = {
                 class: 'T1J0hAryQORw9sMaNfgUwVDor7eS',
-                property: {
+                Property: {
                     id: 'RI5EBAFWoJncjrIkOhB_T1NIGM_R',
                     name: 'tooth'
                 }
             }
             const generalizationData = {
                 specific: 'T1J0hAryQORw9sMaNfgUwVDor7eS',
-                generalization: {
+                Generalization: {
                     id: 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh',
                     general: '95leUBpMz&jCviAoogr70m2Q7oV7'
                 }
@@ -58,11 +58,11 @@ describe('ClassTests', () => {
     describe('emitting tests', () => {
         it('emitClassTest', () => {
             const manager = new UmlManager();
-            const clazz = manager.create('class');
-            const property = manager.create('property');
-            const owningPackage = manager.create('package');
-            const generalization = manager.create('generalization');
-            const general = manager.create('class');
+            const clazz = manager.create('Class');
+            const property = manager.create('Property');
+            const owningPackage = manager.create('Package');
+            const generalization = manager.create('Generalization');
+            const general = manager.create('Class');
             clazz.name = 'blahaj';
             clazz.ownedAttributes.add(property);
             clazz.owningPackage.set(owningPackage);
@@ -71,7 +71,7 @@ describe('ClassTests', () => {
             property.type.set(general);
             const clazzEmit = clazz.emit();
             assert.equal(JSON.stringify(clazzEmit), JSON.stringify({
-                class: {
+                Class: {
                     id: clazz.id,
                     name: 'blahaj',
                     generalizations: [
@@ -85,7 +85,7 @@ describe('ClassTests', () => {
             }));
             const propertyEmit = property.emit();
             assert.equal(JSON.stringify(propertyEmit), JSON.stringify({
-                property: {
+                Property: {
                     id: property.id,
                     type: general.id
                 },
@@ -93,7 +93,7 @@ describe('ClassTests', () => {
             }));
             const packageEmit = owningPackage.emit();
             assert.equal(JSON.stringify(packageEmit), JSON.stringify({
-                package: {
+                Package: {
                     id: owningPackage.id,
                     packagedElements: [
                         clazz.id
@@ -102,7 +102,7 @@ describe('ClassTests', () => {
             }));
             const generalizationEmit = generalization.emit();
             assert.equal(JSON.stringify(generalizationEmit), JSON.stringify({
-                generalization: {
+                Generalization: {
                     id: generalization.id,
                     general: general.id
                 },
@@ -113,8 +113,8 @@ describe('ClassTests', () => {
     describe('basic tests', () => {
         it('add ownedAttribute test', async () => {
             const manager = new UmlManager();
-            const clazz = manager.create('class');
-            const property = manager.create('property');
+            const clazz = manager.create('Class');
+            const property = manager.create('Property');
             await clazz.ownedAttributes.add(property);
             assert.ok(clazz.ownedAttributes.contains(property));
             assert.equal(clazz.ownedAttributes.size(), 1);

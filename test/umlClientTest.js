@@ -2,7 +2,7 @@ import UmlWebClient from "../lib/umlClient";
 import { randomID } from '../lib/types/element';
 import assert from 'assert';
 
-let serverAddress = 'wss://uml.cafe/api/';
+let serverAddress = 'ws://localhost:1672';
 let sessionName = randomID();
 
 describe('UmlClient2Test', () => {
@@ -21,7 +21,7 @@ describe('UmlClient2Test', () => {
         const numElements = 100;
         const elQueue = [];
         for (let i = 0; i < numElements; i++) {
-            elQueue.push(client1.post('package'));
+            elQueue.push(client1.post('Package'));
         }
 
         for (let i = 0; i < numElements; i++) {
@@ -58,7 +58,7 @@ describe('UmlClient2Test', () => {
 
         const createClasses = async (owner) => {
             for (let i = 0; i < 4; i++) {
-                const clazz = client1.post('class');
+                const clazz = client1.post('Class');
                 elQueue.push(clazz);
                 clazz.owningPackage.set(owner);
                 client1.put(clazz);
@@ -71,7 +71,7 @@ describe('UmlClient2Test', () => {
 
         const createEls = async () => {
             for (let i = 0; i < numElements; i++) {
-                const pkg = client1.post('package');
+                const pkg = client1.post('Package');
                 await createClasses(pkg);
                 elQueue.push(pkg);
                 client1.put(pkg);

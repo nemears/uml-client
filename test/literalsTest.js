@@ -8,7 +8,7 @@ describe('Literals test', () => {
             const manager = new UmlManager();
             const literalIntData = {
                 owningPackage: 'KtGdtwTqJxkvydq04BBYm2UHTxSx',
-                literalInt: {
+                LiteralInt: {
                     id: 'yjo4P9202s2J4Sy8xqq4CrYqkqMt',
                     name: 'little int',
                     value: 1
@@ -25,7 +25,7 @@ describe('Literals test', () => {
             const manager = new UmlManager();
             const literalStringData = {
                 owningPackage: 'KtGdtwTqJxkvydq04BBYm2UHTxSx',
-                literalString: {
+                LiteralString: {
                     id: 'yjo4P9202s2J4Sy8xqq4CrYqkqMt',
                     name: 'little int',
                     value: 1
@@ -42,12 +42,12 @@ describe('Literals test', () => {
     describe('emiting tests', () => {
         it('emit literal ints and multiplicity', async () => {
             const manager = new UmlManager();
-            const pckg = manager.create('package');
-            const literalString = manager.create('literalString');
-            const literalInt = manager.create('literalInt');
-            const literalIntUp = manager.create('literalInt');
-            const property = manager.create('property');
-            const dataType = manager.create('dataType');
+            const pckg = manager.create('Package');
+            const literalString = manager.create('LiteralString');
+            const literalInt = manager.create('LiteralInt');
+            const literalIntUp = manager.create('LiteralInt');
+            const property = manager.create('Property');
+            const dataType = manager.create('DataType');
             await pckg.packagedElements.add(literalString);
             await pckg.packagedElements.add(dataType);
             literalString.name = 'literal string test';
@@ -60,7 +60,7 @@ describe('Literals test', () => {
             literalInt.name = 'lower';
             const literalStringEmit = literalString.emit();
             assert.equal(JSON.stringify(literalStringEmit), JSON.stringify({
-                literalString: {
+                LiteralString: {
                     id: literalString.id,
                     name: 'literal string test',
                     value: 'the value of the literal string'
@@ -69,7 +69,7 @@ describe('Literals test', () => {
             }));
             const propertyEmit = property.emit();
             assert.equal(JSON.stringify(propertyEmit), JSON.stringify({
-                property: {
+                Property: {
                     id: property.id,
                     lowerValue: literalInt.id,
                     upperValue: literalIntUp.id
@@ -78,7 +78,7 @@ describe('Literals test', () => {
             }));
             const literalIntEmit = literalInt.emit();
             assert.equal(JSON.stringify(literalIntEmit), JSON.stringify({
-                literalInt: {
+                LiteralInt: {
                     id: literalInt.id,
                     name: 'lower',
                     value: 0
@@ -87,7 +87,7 @@ describe('Literals test', () => {
             }));
             const literalIntUpEmit = literalIntUp.emit();
             assert.equal(JSON.stringify(literalIntUpEmit), JSON.stringify({
-                literalInt: {
+                LiteralInt: {
                     id: literalIntUp.id,
                     value: 10
                 },

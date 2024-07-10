@@ -5,10 +5,10 @@ describe('SetTest', () => {
     describe('AsynchronousIterate', () => {
         it('iterate through array', async () => {
             const manager = new UmlManager();
-            let pckg = manager.create('package');
-            let class1 = manager.create('class');
-            let class2 = manager.create('class');
-            let class3 = manager.create('class');
+            let pckg = manager.create('Package');
+            let class1 = manager.create('Class');
+            let class2 = manager.create('Class');
+            let class3 = manager.create('Class');
             pckg.packagedElements.add(class1);
             pckg.packagedElements.add(class2);
             pckg.packagedElements.add(class3);
@@ -24,9 +24,9 @@ describe('SetTest', () => {
         });
         it('iterate through multi set array', async () => {
             const manager = new UmlManager();
-            const assoc = manager.create('association');
-            const ownedEnd = manager.create('property');
-            const memberEnd = manager.create('property');
+            const assoc = manager.create('Association');
+            const ownedEnd = manager.create('Property');
+            const memberEnd = manager.create('Property');
             ownedEnd.name = 'ownedEnd';
             memberEnd.name = 'memberEnd';
             await assoc.ownedEnds.add(ownedEnd);
@@ -44,10 +44,10 @@ describe('SetTest', () => {
     describe('Ids iterate', () => {
         it('iterate through ids', () => {
             const manager = new UmlManager();
-            let pckg = manager.create('package');
-            let class1 = manager.create('class');
-            let class2 = manager.create('class');
-            let class3 = manager.create('class');
+            let pckg = manager.create('Package');
+            let class1 = manager.create('Class');
+            let class2 = manager.create('Class');
+            let class3 = manager.create('Class');
             pckg.packagedElements.add(class1);
             pckg.packagedElements.add(class2);
             pckg.packagedElements.add(class3);
@@ -79,9 +79,9 @@ describe('SetTest', () => {
     describe('singletonTests', () => {
         it('oppositeOverride', async () => {
             const manager = new UmlManager();
-            let pckg1 = manager.create('package');
-            let pckg2 = manager.create('package');
-            let clazz = manager.create('class');
+            let pckg1 = manager.create('Package');
+            let pckg2 = manager.create('Package');
+            let clazz = manager.create('Class');
             await pckg1.packagedElements.add(clazz);
             assert(pckg1.packagedElements.contains(clazz));
             assert.equal(pckg1.packagedElements.size(), 1);

@@ -3,17 +3,19 @@ import UmlClient from '../lib/umlClient.js';
 import { STRING_ID, generate } from '../lib/generate.js';
 import { randomID } from '../lib/types/element.js';
 
+const serverAdress = 'ws://localhost:1672';
+
 describe('uml-generate tests', () => {
     it('generate simple class with singleton', async () => {
         const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const property = client.post('property');
-        const upper = client.post('literalInt');
-        const lower = client.post('literalInt');
+        const clazz = client.post('Class');
+        const property = client.post('Property');
+        const upper = client.post('LiteralInt');
+        const lower = client.post('LiteralInt');
         upper.value = 1;
         lower.value = 0;
         property.lowerValue.set(lower);
@@ -29,14 +31,14 @@ describe('uml-generate tests', () => {
     });
     it ('generate simple class with set', async () => {
         const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const property = client.post('property');
-        const upper = client.post('literalUnlimitedNatural');
-        const lower = client.post('literalInt');
+        const clazz = client.post('Class');
+        const property = client.post('Property');
+        const upper = client.post('LiteralUnlimitedNatural');
+        const lower = client.post('LiteralInt');
         upper.value = '*';
         lower.value = 0;
         property.upperValue.set(upper);
@@ -52,15 +54,15 @@ describe('uml-generate tests', () => {
     });
     it('generate simple class with string property', async () => {
         const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const property = client.post('property');
-        const upper = client.post('literalUnlimitedNatural');
-        const lower = client.post('literalInt');
-        const defaultValue = client.post('literalString');
+        const clazz = client.post('Class');
+        const property = client.post('Property');
+        const upper = client.post('LiteralUnlimitedNatural');
+        const lower = client.post('LiteralInt');
+        const defaultValue = client.post('LiteralString');
         upper.value = 1;
         lower.value = 0;
         defaultValue.value = 'hello tests!';
@@ -78,20 +80,20 @@ describe('uml-generate tests', () => {
     });
     it('generate class with general', async () => {
         const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const general = client.post('class');
-        const generalization = client.post('generalization');
-        const property = client.post('property');
-        const upper = client.post('literalUnlimitedNatural');
-        const lower = client.post('literalInt');
-        const defaultValue = client.post('literalReal');
-        const generalProperty = client.post('property');
-        const generalUpper = client.post('literalUnlimitedNatural');
-        const generalLower = client.post('literalInt');
+        const clazz = client.post('Class');
+        const general = client.post('Class');
+        const generalization = client.post('Generalization');
+        const property = client.post('Property');
+        const upper = client.post('LiteralUnlimitedNatural');
+        const lower = client.post('LiteralInt');
+        const defaultValue = client.post('LiteralReal');
+        const generalProperty = client.post('Property');
+        const generalUpper = client.post('LiteralUnlimitedNatural');
+        const generalLower = client.post('LiteralInt');
         upper.value = 1;
         lower.value = 0;
         defaultValue.value = 3.14;
@@ -121,12 +123,12 @@ describe('uml-generate tests', () => {
     });
     it('generate simple package with class', async () => {
        const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const pkg = client.post('package');
+        const clazz = client.post('Class');
+        const pkg = client.post('Package');
         clazz.name = 'Foo';
         pkg.name = 'Bar';
         pkg.packagedElements.add(clazz);
@@ -140,18 +142,18 @@ describe('uml-generate tests', () => {
     });
     it('manager post and put class with string property', async () => {
        const client = new UmlClient({
-            address: 'wss://uml.cafe/api/',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
-        const clazz = client.post('class');
-        const property = client.post('property');
-        const defaultValue = client.post('literalString');
-        const upperValue = client.post('literalInt');
-        const lowerValue = client.post('literalInt');
-        const pkg = client.post('package');
+        const clazz = client.post('Class');
+        const property = client.post('Property');
+        const defaultValue = client.post('LiteralString');
+        const upperValue = client.post('LiteralInt');
+        const lowerValue = client.post('LiteralInt');
+        const pkg = client.post('Package');
         const head = await client.head();
-        const api = client.post('package');
+        const api = client.post('Package');
         property.name = 'blob';
         upperValue.value = 1;
         lowerValue.value = 0;
@@ -202,7 +204,7 @@ describe('uml-generate tests', () => {
         const model = await client.head();
         const uml = await model.packagedElements.front();
         assert(uml.name === 'UML');
-        const api = client.post('package');
+        const api = client.post('Package');
         model.packagedElements.add(api);
         console.log('generating...');
         const module = await generate(uml, client);
@@ -214,24 +216,24 @@ describe('uml-generate tests', () => {
     describe('Stereotype Tests', () => {
         it('Stereotype subsets packagedElement', async () => {
             const client = new UmlClient({
-                address: 'ws://localhost:1672',
+                address: serverAdress,
                 project: randomID(),
             });
             await client.initialization;
             
-            const foo = client.post('class');
-            const stereotype = client.post('stereotype');
-            const property = client.post('property');
-            const extension = client.post('extension');
-            const extensionEnd = client.post('extensionEnd');
-            const profile = client.post('profile');
+            const foo = client.post('Class');
+            const stereotype = client.post('Stereotype');
+            const property = client.post('Property');
+            const extension = client.post('Extension');
+            const extensionEnd = client.post('ExtensionEnd');
+            const profile = client.post('Profile');
             const head = await client.head();
             const umlPackage = await head.packagedElements.front();
             umlPackage.packagedElements.add(profile);
             profile.name = 'TestProfile';
             profile.packagedElements.add(stereotype, foo);
             extension.ownedEnd.set(extensionEnd);
-            extension.metaClass = 'package';
+            extension.metaClass = 'Package';
             profile.packagedElements.add(extension)
             stereotype.name = 'Test';
             stereotype.ownedAttributes.add(property);
@@ -244,7 +246,7 @@ describe('uml-generate tests', () => {
             
             const uml = await getUmlModuleAndManager(client);
             const manager = uml.manager;
-            const packageToStereotype = client.post('package');
+            const packageToStereotype = client.post('Package');
             const testEl = await manager.apply(packageToStereotype, 'TestProfile.Test');
             assert.ok(testEl);
             const fooInst = manager.post('TestProfile.Foo');
@@ -256,7 +258,7 @@ describe('uml-generate tests', () => {
     });
     it('Get Diagram Stereotype', async () => {
         const client = new UmlClient({
-            address: 'ws://localhost:1672',
+            address: serverAdress,
             project: randomID(),
         });
         await client.initialization;

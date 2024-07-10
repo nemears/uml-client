@@ -7,7 +7,7 @@ describe('Association Tests', () => {
         it('parseExtensionTest', async () => {
             const manager = new UmlManager();
             const data = {
-                extension: {
+                Extension: {
                     id: '3zEOSFAHbYoHtgDM7WQN5nsJkIbP',
                     metaClass: 'class'
                 }
@@ -19,11 +19,11 @@ describe('Association Tests', () => {
         });
         it('deleteAssociationTest', async () => {
             const manager = new UmlManager();
-            const association = manager.create('association');
-            const memberEnd = manager.create('property');
-            const ownedEnd = manager.create('property');
-            const association2 = manager.create('association');
-            const navigableOwnedEnd = manager.create('property');
+            const association = manager.create('Association');
+            const memberEnd = manager.create('Property');
+            const ownedEnd = manager.create('Property');
+            const association2 = manager.create('Association');
+            const navigableOwnedEnd = manager.create('Property');
 
             await association.memberEnds.add(memberEnd);
             await association.ownedEnds.add(ownedEnd);

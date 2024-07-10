@@ -5,12 +5,12 @@ import parse from '../lib/parse';
 describe('PackageTests', () => {
     it('basic stereotype profile test', async () => {
         const manager = new UmlManager();
-        const stereotype = manager.create('stereotype');
-        const profile = manager.create('profile');
-        const pkg = manager.create('package');
-        stereotype.name = 'stereotype';
-        profile.name = 'profile';
-        pkg.name = 'package';
+        const stereotype = manager.create('Stereotype');
+        const profile = manager.create('Profile');
+        const pkg = manager.create('Package');
+        stereotype.name = 'Stereotype';
+        profile.name = 'Profile';
+        pkg.name = 'Package';
         await profile.ownedStereotypes.add(stereotype);
         assert.equal(stereotype.profile.id(), profile.id);
         await profile.ownedStereotypes.remove(stereotype);
@@ -26,7 +26,7 @@ describe('PackageTests', () => {
         it('parsePackageTest', async () => {
             const data = {
                 owningPackage: 't4ZBDDjRiqoD&sVyDe7Q0isJ8aYm',
-                package: {
+                Package: {
                     id: 'gLIIofvw6P3saxFtrk3z2KkEHzBR',
                     name: 'blahaj',
                     packagedElements: [
@@ -44,7 +44,7 @@ describe('PackageTests', () => {
                 assert.ok(id === '3KIU4oA0taLKU7ilMjGhTgZ&Zk4A' || id === 'VHBQT06I7yXBTabcFapea4_h4Y66');
             }
             const owningPackageData = {
-                package: {
+                Package: {
                     id: 't4ZBDDjRiqoD&sVyDe7Q0isJ8aYm',
                     packagedElements: [
                         'gLIIofvw6P3saxFtrk3z2KkEHzBR'
@@ -61,17 +61,17 @@ describe('PackageTests', () => {
     describe('emittingTests', () => {
         it('emitPackageTest', () => {
             const manager = new UmlManager();
-            const packageEl = manager.create('package');
-            const child1 = manager.create('package');
-            const child2 = manager.create('package');
-            const owningPackage = manager.create('package');
+            const packageEl = manager.create('Package');
+            const child1 = manager.create('Package');
+            const child2 = manager.create('Package');
+            const owningPackage = manager.create('Package');
             packageEl.packagedElements.add(child1);
             packageEl.packagedElements.add(child2);
             packageEl.owningPackage.set(owningPackage);
             packageEl.name = 'blahaj';
             const emit = packageEl.emit();
             assert.equal(JSON.stringify(emit), JSON.stringify({
-                package: {
+                Package: {
                     id: packageEl.id,
                     name: 'blahaj',
                     packagedElements: [

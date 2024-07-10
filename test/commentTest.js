@@ -7,7 +7,7 @@ describe('CommentTests', () => {
     it('parseCommentTest', async () => {
         const manager = new UmlManager();
         const data = {
-            comment: {
+            Comment: {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7CD',
                 annotatedElements: ['T1J0hAryQORw9sMaNfgUwVDor7eE'],
                 body: "it's freestyle not freedom"
@@ -15,13 +15,13 @@ describe('CommentTests', () => {
             owner: 'l3mdRJ0ChhLsbOXcs1XT3M5IwCOD'
         }
         const ownerData = {
-            class: {
+            Class: {
                 id: 'l3mdRJ0ChhLsbOXcs1XT3M5IwCOD',
                 ownedComments: ['T1J0hAryQORw9sMaNfgUwVDor7CD']
             }
         }
         const annotatedData = {
-            class: {
+            Class: {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7eE',
             }
         }
@@ -38,15 +38,15 @@ describe('CommentTests', () => {
     });
     it('emitCommentTest', () => {
         const manager = new UmlManager();
-        const comment = manager.create('comment');
-        const clazz = manager.create('class');
-        const clazzToo = manager.create('class');
+        const comment = manager.create('Comment');
+        const clazz = manager.create('Class');
+        const clazzToo = manager.create('Class');
         clazz.ownedComments.add(comment);
         comment.annotatedElements.add(clazzToo);
         comment.body = "it's freestyle not freedom";
         const commentEmit = comment.emit();
         assert.equal(JSON.stringify(commentEmit), JSON.stringify({
-            comment: {
+            Comment: {
                 id: comment.id,
                 annotatedElements: [
                     clazzToo.id
@@ -58,8 +58,8 @@ describe('CommentTests', () => {
     });
     it('deleteCommentTest', async () => {
         const manager = new UmlManager();
-        const comment = manager.create('comment');
-        const clazz = manager.create('class');
+        const comment = manager.create('Comment');
+        const clazz = manager.create('Class');
         await clazz.ownedComments.add(comment);
         assert.equal(comment.owner.id(), clazz.id);
         assert.equal(clazz.ownedComments.size(), 1);

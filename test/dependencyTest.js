@@ -7,19 +7,19 @@ describe('DependencyTests', () => {
     it('parseDependencyTest', async () => {
         const manager = new UmlManager();
         const data = {
-            dependency: {
+            Dependency: {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7ID',
                 suppliers: ['T1J0hAryQORw9sMaNfgUwVDor7eS'],
                 clients: ['T1J0hAryQORw9sMaNfgUwVDor7eC']
             }
         }
         const supplierData = {
-            class: {
+            Class: {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7eS'
             }
         }
         const clientData = {
-            class: {
+            Class: {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7eC',
                 clientDependencies: ['T1J0hAryQORw9sMaNfgUwVDor7ID']
             }
@@ -37,14 +37,14 @@ describe('DependencyTests', () => {
     });
     it('emitDependencyTest', () => {
         const manager = new UmlManager();
-        const dependency = manager.create('dependency');
-        const clazz = manager.create('class');
-        const clazzToo = manager.create('class');
+        const dependency = manager.create('Dependency');
+        const clazz = manager.create('Class');
+        const clazzToo = manager.create('Class');
         dependency.suppliers.add(clazz);
         dependency.clients.add(clazzToo);
         const dependencyEmit = dependency.emit();
         assert.equal(JSON.stringify(dependencyEmit), JSON.stringify({
-            dependency: {
+            Dependency: {
                 id: dependency.id,
                 clients: [clazzToo.id],
                 suppliers: [clazz.id]
@@ -53,13 +53,13 @@ describe('DependencyTests', () => {
     });
     it('deleteDependencyTest', async () => {
         const manager = new UmlManager();
-        const dependency = manager.create('dependency');
-        const clazz = manager.create('class');
-        const clazzToo = manager.create('class');
+        const dependency = manager.create('Dependency');
+        const clazz = manager.create('Class');
+        const clazzToo = manager.create('Class');
         dependency.suppliers.add(clazz);
         dependency.clients.add(clazzToo);
         assert.equal(await clazzToo.clientDependencies.front(), dependency);
         await manager.deleteElement(dependency);
         assert.equal(dependency.clientDependencies.size(), 0);
     });
-})
+});
