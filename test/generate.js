@@ -170,31 +170,28 @@ describe('uml-generate tests', () => {
         const manager = new Bar.BarManager(api);
         const barInst = manager.post('Foo');
         assert(barInst.blob === 'cat');
-        const wait1Sec = () => {
-            return new Promise((res) => {
-                setTimeout(async () => {
-                   res(true); 
-                }, 1000);
-            }); 
-        };
-        await wait1Sec();
+        console.log('putting Foo');
+        await manager.put(barInst);
+        console.log('put Foo');
         assert(api.ownedElements.size() === 1);
         let instance = await api.ownedElements.front();
-        assert(instance.elementType() === 'instanceSpecification');
+        assert(instance.elementType() === 'InstanceSpecification');
         assert(instance.slots.size() === 1);
         let slot = await instance.slots.front();
-        assert(slot.values.size() === 0);
-        manager.put(barInst);
-        await wait1Sec();
         assert(slot.values.size() === 1);
-        let value = await slot.values.front();
+        let value  = await slot.values.front();
+        assert.ok(value.is('LiteralString'));
+        assert.equal(value.value, 'cat');
+        console.log('putting Foo');
+        await manager.put(barInst);
+        assert(slot.values.size() === 1);
+        value = await slot.values.front();
         assert(value.value === 'cat');
         barInst.blob = 'fox';
-        manager.put(barInst);
-        await wait1Sec();
+        await manager.put(barInst);
         assert(api.ownedElements.size() === 1);
         instance = await api.ownedElements.front();
-        assert(instance.elementType() === 'instanceSpecification');
+        assert.equal(instance.elementType(), 'InstanceSpecification');
         assert(instance.slots.size() === 1);
         slot = await instance.slots.front();
         assert(slot.values.size() === 1);
