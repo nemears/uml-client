@@ -256,14 +256,24 @@ describe('uml-generate tests', () => {
             assert.ok(testEl.packagedElements.contains(fooInst));
         });
     });
-    it('Get Diagram Stereotype', async () => {
+    it('Delete generated element', async () => {
         const client = new UmlClient({
             address: serverAdress,
             project: randomID(),
         });
         await client.initialization;
 
-        const stereotype = await client.get('Diagram_nuc1IC2Cavgoa4zMBlVq');
-        assert.ok(stereotype.profile.has());
+        const uml = await getUmlModuleAndManager(client);
+        const manager = uml.manager;
+
+        const shape1 = manager.post('UML DI.UMLShape');
+        const shape2 = manager.post('UML DI.UMLShape');
+        console.log('shape 1 ' + shape1.id);
+        console.log('shape 2 ' + shape2.id);
+        await shape1.ownedElement.add(shape2);
+        assert.equal((await shape1.ownedElement.front()).id, shape2.id);
+        console.log('deleting shape 2 (ownedElement)')
+        await manager.delete(shape2);
+        assert.equal(shape1.ownedElement.size(), 0);
     });
 });
