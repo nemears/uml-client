@@ -276,4 +276,38 @@ describe('uml-generate tests', () => {
         await manager.delete(shape2);
         assert.equal(shape1.ownedElement.size(), 0);
     });
+    it('generate redefined element', async () => {
+        const client = new UmlClient({
+            address: serverAdress,
+            project: randomID(),
+        });
+        await client.initialization;
+        
+        const parentPackage = client.post('Package');
+        const ogClass = client.post('Class');
+        const ogProperty = client.post('Property');
+        const ogGeneralization = client.post('Generalization');
+        const redefinedClass = client.post('Class');
+        const redefinedProperty = client.post('Property');
+        parentPackage.name = 'root';
+        ogClass.name = 'og';
+        ogProperty.name = 'prop';
+        await ogClass.ownedAttributes.add(ogProperty);
+        await ogClass.generalizations.add(ogGeneralization);
+        await ogGeneralization.general.set(redefinedClass);
+        redefinedClass.name = 're';
+        redefinedProperty.name = 'prop';
+        await redefinedProperty.redefinedProperties.add(ogProperty);
+        await redefinedClass.ownedAttributes.add(redefinedProperty);
+        parentPackage.packagedElements.add(ogClass);
+        parentPackage.packagedElements.add(redefinedClass);
+
+        const module = await generate(parentPackage, client);
+
+        const apiPackage = client.post('Package');
+        const manager = new module.rootManager(apiPackage);
+        const redefinedApiEl = manager.post('re');
+        assert.ok(redefinedApiEl.sets.has(ogProperty.id));
+        assert.ok(redefinedApiEl.sets.has(redefinedProperty.id));
+    });
 });
