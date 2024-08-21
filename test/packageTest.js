@@ -13,6 +13,14 @@ describe('PackageTests', () => {
         pkg.name = 'Package';
         await profile.ownedStereotypes.add(stereotype);
         assert.equal(stereotype.profile.id(), profile.id);
+        assert.equal(stereotype.owningPackage.id(), profile.id);
+        assert.equal(stereotype.namespace.id(), profile.id);
+        assert.equal(stereotype.owner.id(), profile.id);
+        assert.ok(profile.ownedStereotypes.contains(stereotype));
+        assert.ok(profile.packagedElements.contains(stereotype));
+        assert.ok(profile.ownedMembers.contains(stereotype));
+        assert.ok(profile.members.contains(stereotype));
+        assert.ok(profile.ownedElements.contains(stereotype));
         await profile.ownedStereotypes.remove(stereotype);
         await profile.packagedElements.add(pkg);
         await pkg.ownedStereotypes.add(stereotype);
