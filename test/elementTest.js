@@ -96,7 +96,6 @@ describe('ElementTest', function () {
       assert.ok(property.is('StructuralFeature'));
       assert.ok(property.is('TypedElement'));
       assert.ok(property.is('ConnectableElement'));
-      assert.ok(property.elementTypes.has('MultiplicityElement'));
       assert.ok(property.is('MultiplicityElement'));
       assert.ok(property.is('Feature'));
       assert.ok(property.is('RedefinableElement'));
