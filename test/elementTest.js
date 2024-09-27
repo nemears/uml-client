@@ -7,6 +7,7 @@ import Comment from '../lib/types/comment.js';
 import PrimitiveType from '../lib/types/primitiveType.js';
 import Property from '../lib/types/property.js';
 import LiteralInt from '../lib/types/literalInt.js';
+import UmlManager from '../lib/manager.js';
 
 describe('ElementTest', function () {
   describe('#ownedElement', function () {
@@ -63,7 +64,8 @@ describe('ElementTest', function () {
   });
   describe('isSubClassOf', () => {
     it('isSubClassOfPackageTest', () => {
-      let pckg = new Package();
+      const manager = new UmlManager();
+      let pckg = manager.create('Package');
       assert.ok(pckg.is('Package'));
       assert.ok(pckg.is('PackageableElement'));
       assert.ok(pckg.is('Namespace'));

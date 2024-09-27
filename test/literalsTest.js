@@ -14,8 +14,7 @@ describe('Literals test', () => {
                     value: 1
                 }
             };
-            const literalInt = await parse(literalIntData);
-            manager.add(literalInt);
+            const literalInt = await manager.parse(literalIntData);
             assert.equal(literalInt.id, 'yjo4P9202s2J4Sy8xqq4CrYqkqMt');
             assert.equal(literalInt.name, 'little int');
             assert.equal(literalInt.value, 1);
@@ -31,8 +30,7 @@ describe('Literals test', () => {
                     value: 1
                 }
             };
-            const literalString = await parse(literalStringData);
-            manager.add(literalString);
+            const literalString = await manager.parse(literalStringData);
             assert.equal(literalString.id, 'yjo4P9202s2J4Sy8xqq4CrYqkqMt');
             assert.equal(literalString.name, 'little int');
             assert.equal(literalString.value, 1);
@@ -48,8 +46,6 @@ describe('Literals test', () => {
             const literalIntUp = manager.create('LiteralInt');
             const property = manager.create('Property');
             const dataType = manager.create('DataType');
-            await pckg.packagedElements.add(literalString);
-            await pckg.packagedElements.add(dataType);
             literalString.name = 'literal string test';
             literalString.value = 'the value of the literal string';
             await dataType.ownedAttributes.add(property);

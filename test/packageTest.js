@@ -44,8 +44,7 @@ describe('PackageTests', () => {
                 }
             }
             const manager = new UmlManager();
-            const packageEl = await parse(data);
-            manager.add(packageEl);
+            const packageEl = await manager.parse(data);
             assert.equal(packageEl.id, 'gLIIofvw6P3saxFtrk3z2KkEHzBR')
             assert.equal(packageEl.name, 'blahaj');
             for (let id of packageEl.packagedElements.ids()) {
@@ -59,8 +58,7 @@ describe('PackageTests', () => {
                     ]
                 }
             }
-            const owningPackage = await parse(owningPackageData);
-            manager.add(owningPackage);
+            const owningPackage = await manager.parse(owningPackageData);
             const owningPackageFromPackage = await packageEl.owningPackage.get();
             assert.ok(owningPackageFromPackage !== null && owningPackageFromPackage !== undefined);
             assert.equal(owningPackage.id, owningPackageFromPackage.id);

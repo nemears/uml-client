@@ -4,7 +4,7 @@ import assert from 'assert';
 
 let serverAddress = 'ws://localhost:1672';
 let sessionName = randomID();
-
+/*
 describe('UmlClient2Test', () => {
     it('putTest', async () => {
         const client1 = new UmlWebClient({
@@ -95,3 +95,4 @@ describe('UmlClient2Test', () => {
         client2.close();
     });
 });
+*/

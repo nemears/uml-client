@@ -25,12 +25,9 @@ describe('CommentTests', () => {
                 id: 'T1J0hAryQORw9sMaNfgUwVDor7eE',
             }
         }
-        const comment = await parse(data);
-        const clazz = await parse(ownerData);
-        const clazzToo = await parse(annotatedData);
-        manager.add(comment);
-        manager.add(clazz);
-        manager.add(clazzToo);
+        const comment = await manager.parse(data);
+        const clazz = await manager.parse(ownerData);
+        const clazzToo = await manager.parse(annotatedData);
         assert.equal(comment.owner.id(), 'l3mdRJ0ChhLsbOXcs1XT3M5IwCOD');
         assert.equal(await comment.annotatedElements.front(), clazzToo);
         assert.equal(comment.body, "it's freestyle not freedom");
@@ -48,10 +45,10 @@ describe('CommentTests', () => {
         assert.equal(JSON.stringify(commentEmit), JSON.stringify({
             Comment: {
                 id: comment.id,
+                body: "it's freestyle not freedom",
                 annotatedElements: [
                     clazzToo.id
-                ],
-                body: "it's freestyle not freedom"
+                ]
             },
             owner: clazz.id
         }));        
@@ -63,7 +60,7 @@ describe('CommentTests', () => {
         await clazz.ownedComments.add(comment);
         assert.equal(comment.owner.id(), clazz.id);
         assert.equal(clazz.ownedComments.size(), 1);
-        await manager.deleteElement(comment);
+        await manager.delete(comment);
         assert.equal(comment.owner.id(), nullID());
         assert.equal(clazz.ownedComments.size(), 0);
     });

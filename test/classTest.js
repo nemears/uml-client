@@ -32,24 +32,24 @@ describe('ClassTests', () => {
                     general: '95leUBpMz&jCviAoogr70m2Q7oV7'
                 }
             }
-            const clazz = await parse(data);
-            manager.add(clazz);
+            const clazz = await manager.parse(data);
             assert.equal(clazz.id, 'T1J0hAryQORw9sMaNfgUwVDor7eS');
             assert.equal(clazz.name, 'blahaj');
+            assert.equal(clazz.ownedAttributes.size(), 1);
             for (let id of clazz.ownedAttributes.ids()) {
                 assert.equal(id, 'RI5EBAFWoJncjrIkOhB_T1NIGM_R');
             }
+            assert.equal(clazz.generalizations.size(), 1);
             for (let id of clazz.generalizations.ids()) {
                 assert.equal(id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh')
             }
-            const property = await parse(propertyData);
-            manager.add(property);
+            const property = await manager.parse(propertyData);
             assert.equal(property.id, 'RI5EBAFWoJncjrIkOhB_T1NIGM_R');
             assert.equal(property.name, 'tooth');
+            assert.ok(property.clazz.has());
             const propertyClazz = await property.clazz.get();
             assert.equal(propertyClazz.id, clazz.id);
-            const generalization = await parse(generalizationData);
-            manager.add(generalization);
+            const generalization = await manager.parse(generalizationData);
             assert.equal(generalization.id, 'l3mdRJ0ChhLsbOXcs1XT3M5IwYKh');
             const generalizationSpecific = await generalization.specific.get();
             assert.equal(generalizationSpecific.id, clazz.id);
@@ -73,13 +73,13 @@ describe('ClassTests', () => {
             assert.equal(JSON.stringify(clazzEmit), JSON.stringify({
                 Class: {
                     id: clazz.id,
-                    name: 'blahaj',
+                    ownedAttributes: [
+                        property.id
+                    ],
                     generalizations: [
                         generalization.id
                     ],
-                    ownedAttributes: [
-                        property.id
-                    ]
+                    name: 'blahaj'
                 },
                 owningPackage: owningPackage.id
             }));
