@@ -4,18 +4,18 @@ import parse from '../lib/parse';
 
 describe('Association Tests', () => {
     describe('parse association tests', () => {
-        // it('parseExtensionTest', async () => {
-        //     const manager = new UmlManager();
-        //     const data = {
-        //         Extension: {
-        //             id: '3zEOSFAHbYoHtgDM7WQN5nsJkIbP',
-        //             metaClass: 'class'
-        //         }
-        //     }
-        //     const extension = await manager.parse(data);
-        //     assert.equal(extension.id, '3zEOSFAHbYoHtgDM7WQN5nsJkIbP');
-        //     assert.equal(extension.metaClass, 'class');
-        // });
+        it('parseExtensionTest', async () => {
+            const manager = new UmlManager();
+            const data = {
+                Extension: {
+                    id: '3zEOSFAHbYoHtgDM7WQN5nsJkIbP',
+                    metaClass: 'class'
+                }
+            }
+            const extension = await manager.parse(data);
+            assert.equal(extension.id, '3zEOSFAHbYoHtgDM7WQN5nsJkIbP');
+            assert.equal(extension.metaClass, 'class');
+        });
         it('deleteAssociationTest', async () => {
             const manager = new UmlManager();
             const association = manager.create('Association');
