@@ -1,6 +1,5 @@
 import assert from 'assert';
 import UmlManager from '../lib/manager';
-import parse from '../lib/parse';
 
 describe('Association Tests', () => {
     describe('parse association tests', () => {
