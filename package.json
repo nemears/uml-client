@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/**/*.js --recursive --timeout 60000 --exit"
   },
-  "author": "Emory (Nicholas) Emerson Mears",
+  "author": "Em Mears",
   "license": "MIT",
   "dependencies": {
     "core-js": "^3.27.2",
