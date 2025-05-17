@@ -7,7 +7,7 @@ describe('Literals test', () => {
             const manager = new UmlManager();
             const literalIntData = {
                 owningPackage: 'KtGdtwTqJxkvydq04BBYm2UHTxSx',
-                LiteralInt: {
+                LiteralInteger: {
                     id: 'yjo4P9202s2J4Sy8xqq4CrYqkqMt',
                     name: 'little int',
                     value: 1
@@ -82,7 +82,7 @@ describe('Literals test', () => {
             }));
             const literalIntUpEmit = literalIntUp.emit();
             assert.equal(JSON.stringify(literalIntUpEmit), JSON.stringify({
-                LiteralInt: {
+                LiteralInteger: {
                     id: literalIntUp.id,
                     value: 10
                 },

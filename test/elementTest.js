@@ -6,7 +6,7 @@ import Class from '../lib/types/class.js';
 import Comment from '../lib/types/comment.js';
 import PrimitiveType from '../lib/types/primitiveType.js';
 import Property from '../lib/types/property.js';
-import LiteralInt from '../lib/types/literalInt.js';
+import LiteralInteger from '../lib/types/literalInteger.js';
 import UmlManager from '../lib/manager.js';
 
 describe('ElementTest', function () {
@@ -110,8 +110,8 @@ describe('ElementTest', function () {
       assert.ok(comment.is('Element'));
     });
     it('is LiteralInt Test', () => {
-        let literalInt = new LiteralInt();
-        assert.ok(literalInt.is('LiteralInt'));
+        let literalInt = new LiteralInteger();
+        assert.ok(literalInt.is('LiteralInteger'));
         assert.ok(literalInt.is('LiteralSpecification'));
         assert.ok(literalInt.is('ValueSpecification'));
         assert.ok(literalInt.is('TypedElement'));

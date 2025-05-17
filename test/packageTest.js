@@ -10,7 +10,7 @@ describe('PackageTests', () => {
         stereotype.name = 'Stereotype';
         profile.name = 'Profile';
         pkg.name = 'Package';
-        await profile.ownedStereotypes.add(stereotype);
+        await profile.packagedElements.add(stereotype);
         assert.equal(stereotype.profile.id(), profile.id);
         assert.equal(stereotype.owningPackage.id(), profile.id);
         assert.equal(stereotype.namespace.id(), profile.id);
