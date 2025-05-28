@@ -2,6 +2,7 @@ import assert from 'assert';
 import UmlClient from '../lib/umlClient.js';
 import { REAL_ID, STRING_ID, generate } from '../lib/generate.js';
 import { randomID } from '../lib/types/element.js';
+import { create_extension } from '../lib/types/extension.js';
 
 const serverAdress = 'ws://localhost:1672';
 describe('uml-generate tests', () => {
@@ -176,44 +177,54 @@ describe('uml-generate tests', () => {
     });
     describe('Stereotype Tests', () => {
         it('Stereotype subsets packagedElement', async () => {
+            const project_id = randomID();
             const client = new UmlClient({
                 address: serverAdress,
-                project: randomID(),
+                project: project_id,
             });
             await client.initialization;
             
-            const foo = await client.post('Class');
+            const foo = await client.post('Stereotype');
             const stereotype = await client.post('Stereotype');
             const property = await client.post('Property');
-            const extension = await client.post('Extension');
-            const extensionEnd = await client.post('ExtensionEnd');
             const profile = await client.post('Profile');
-            const head = await client.head();
-            const umlPackage = await head.packagedElements.front();
-            await umlPackage.packagedElements.add(profile);
             profile.name = 'TestProfile';
-            await profile.packagedElements.add(stereotype, foo);
-            await extension.ownedEnd.set(extensionEnd);
-            extension.metaClass = 'Package';
-            await profile.packagedElements.add(extension)
+            await profile.packagedElements.add(stereotype);
+            await profile.packagedElements.add(foo);
+            const extension = await create_extension(stereotype, 'Package');
+            const fooExtension = await create_extension(foo, 'Package');
             stereotype.name = 'Test';
             await stereotype.ownedAttributes.add(property);
             property.name = 'foos'
             await property.subsettedProperties.add('F628ncQKADxo6FLtAlDOdlJfewLy');
             foo.name = 'Foo';
             await property.type.set(foo);
-            // await profile.packagedElements.add(stereotype);
-            await profile.packagedElements.add(foo);
-            
-            const manager = await client.generate(umlPackage);
+            const manager = await client.generate(profile);
             const packageToStereotype = await client.post('Package');
             const testEl = await manager.apply(packageToStereotype, stereotype.id);
             assert.ok(testEl);
-            const fooInst = await manager.post(foo.id);
+            const fooPackageToStereotype = await client.post('Package');
+            const fooInst = await manager.apply(fooPackageToStereotype, foo.id);
             assert.ok(fooInst);
             testEl.foos.add(fooInst);
             assert.ok(testEl.foos.contains(fooInst));
             assert.ok(testEl.packagedElements.contains(fooInst));
+            await manager.put(testEl);
+            await manager.put(fooInst);
+
+            const client2 = new UmlClient({
+                address: serverAdress,
+                project: project_id,
+            });
+            await client2.initialization;
+
+            const manager2 = client2._meta_managers.get(manager.id);
+            const testElFromServer = await manager2.get(testEl.id);
+            const fooFromServer = await manager2.get(fooInst.id);
+
+            assert.ok(testElFromServer);
+            assert.ok(testElFromServer.foos.contains(fooFromServer));
+            assert.ok(testElFromServer.packagedElements.contains(fooFromServer));
         });
     });
     it('Delete generated element', async () => {
@@ -255,8 +266,8 @@ describe('uml-generate tests', () => {
         ogClass.name = 'og';
         ogProperty.name = 'prop';
         await ogClass.ownedAttributes.add(ogProperty);
-        await ogClass.generalizations.add(ogGeneralization);
-        await ogGeneralization.general.set(redefinedClass);
+        await redefinedClass.generalizations.add(ogGeneralization);
+        await ogGeneralization.general.set(ogClass);
         redefinedClass.name = 're';
         redefinedProperty.name = 'prop';
         await redefinedProperty.redefinedProperties.add(ogProperty);
@@ -266,7 +277,7 @@ describe('uml-generate tests', () => {
 
         const manager = await client.generate(parentPackage);
         const redefinedApiEl = await manager.post('re');
-        assert.ok(redefinedApiEl.typeInfo.sets.has(ogProperty.id));
-        assert.ok(redefinedApiEl.typeInfo.sets.has(redefinedProperty.id));
+        assert.ok(redefinedApiEl.typeInfo.getSet(ogProperty.id));
+        assert.ok(redefinedApiEl.typeInfo.getSet(redefinedProperty.id));
     });
 });
